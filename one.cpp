@@ -1,6 +1,28 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int numberOfSpecialChars(string s) {
+    unordered_map<char,int>m;
+    vector<int>res(26,0);
+    bool ok[26]={};
+    fill(ok,ok+26,true);
+    // bool ok=true;
+    int v[26]={0};
+    for(auto x:s){
+        if(x>='a' and x<='z'){m[x]++;}
+    }
+    for(auto x:s){
+        if(x>='A' and x<='Z'){
+            x=tolower(x);
+            if(v[x-'a']==m[x] and m[x]>0 and ok[x-'a']){res[x-'a']=1;}
+            else if(v[x-'a']<m[x] and m[x]>0){ok[x-'a']=false;}
+        }
+        else if(x>='a' and x<='z'){v[x-'a']++;}
+    }
+    for(auto x:res){cout<<x<<" ";}cout<<endl;
+    return ok?accumulate(res.begin(),res.end(),0):0;
+}
+
 int hi(){
     vector<int>v={5,3,0,7,4};
     int res=0,n=v.size();
@@ -98,6 +120,8 @@ int main(){
     // cout<<shi()<<endl;
     // lh();
     // dq();
-    cout<<pq(100)<<endl;
+    // cout<<pq(100)<<endl;
+    // string s;cin>>s;
+    cout<<numberOfSpecialChars("aaAbcBC")<<endl;
     return 0;
 }
